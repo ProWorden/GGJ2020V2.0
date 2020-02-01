@@ -24,6 +24,8 @@ public class CharacterController2D : MonoBehaviour
 
     public bool collided = true;
 
+    public Animator anim;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -54,7 +56,7 @@ public class CharacterController2D : MonoBehaviour
 
         velocity.y += Physics2D.gravity.y * Time.deltaTime;
 
-            if (moveInput != 0)
+        if (moveInput != 0)
         {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         }
@@ -62,6 +64,9 @@ public class CharacterController2D : MonoBehaviour
         {
             velocity.x = Mathf.MoveTowards(velocity.x, 0.0f, deceleration * Time.deltaTime);
         }
+
+        anim.SetBool("Walking", moveInput != 0);
+        anim.SetBool("Grounded", grounded);
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, boxCol.size, 0);
 
@@ -90,12 +95,12 @@ public class CharacterController2D : MonoBehaviour
         float moveDirection = Input.GetAxisRaw("Horizontal");
         if (moveDirection < 0)
         {
-            sr.flipX = true;
+            sr.flipX = false;
 
         }
         else if (moveDirection > 0)
         {
-            sr.flipX = false;
+            sr.flipX = true;
         }
 
     }
