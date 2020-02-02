@@ -26,6 +26,12 @@ public class CharacterController2D : MonoBehaviour
 
     public Animator anim;
 
+    public int player = 1;
+
+    string horizontal = "Horizontal";
+    string vertical = "Vertical";
+    string jump = "Jump";
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,12 +39,19 @@ public class CharacterController2D : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
     }
 
+    private void Start()
+    {
+        horizontal = horizontal + player;
+        vertical = vertical + player;
+        jump = jump + player;
+    }
+
     // Update is called once per frame
     void Update()
     {
         Flip();
        
-        float moveInput = Input.GetAxisRaw("Horizontal");
+        float moveInput = Input.GetAxisRaw(horizontal);
         float acceleration = grounded ? walkAcceleration : airAcceleration;
         float deceleration = grounded ? groundDeceleration : 0;
         transform.Translate(velocity * Time.deltaTime);
@@ -47,7 +60,7 @@ public class CharacterController2D : MonoBehaviour
         {
             velocity.y = 0;
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown(jump))
             {
                 velocity.y = Mathf.Sqrt(2 * jumpHeight * Mathf.Abs(Physics2D.gravity.y));
                
@@ -92,11 +105,11 @@ public class CharacterController2D : MonoBehaviour
 
 
 
-                if(!grounded && !Input.GetButtonDown("Jump") && velocity.y > 0)
+                if(!grounded && !Input.GetButtonDown(jump) && velocity.y > 0)
                 {
                     velocity.y = -velocity.y * 0.01f;
                 }
-                else if (!grounded && !Input.GetButtonDown("Jump"))
+                else if (!grounded && !Input.GetButtonDown(jump))
                 {
                     velocity.x = -velocity.x * 0.5f;
                 }
@@ -109,7 +122,7 @@ public class CharacterController2D : MonoBehaviour
 
     void Flip()
     {
-        float moveDirection = Input.GetAxisRaw("Horizontal");
+        float moveDirection = Input.GetAxisRaw(horizontal);
         if (moveDirection < 0)
         {
             sr.flipX = false;

@@ -10,6 +10,8 @@ public class place_block : MonoBehaviour
     public GameObject arrow_obj;
     public GameObject hit_check;
 
+    public int player_no = 1;
+
     int block_count = 0;
     int selection = 0;
     GameObject current_block;
@@ -32,10 +34,34 @@ public class place_block : MonoBehaviour
 
     state current_state = state.MOVING;
 
+    string input_horizontal = "Horizontal";
+    string input_vertical = "Vertical";
+    string input_jump = "Jump";
+    string input_submit = "Submit";
+    string input_open = "Open";
+    string input_select = "Select";
+    string input_cancel = "Cancel";
+    string input_throw = "Throw";
+    string input_left = "RotLeft";
+    string input_right = "RotRight";
+    string input_drop = "Drop";
+
     private void Start()
     {
         block_count = block_list.Length;
         menu_blocks = new GameObject[block_count];
+
+        input_horizontal = input_horizontal + player_no;
+        input_vertical = input_vertical + player_no;
+        input_jump = input_jump + player_no;
+        input_submit = input_submit + player_no;
+        input_open = input_open + player_no;
+        input_select = input_select + player_no;
+        input_cancel = input_cancel + player_no;
+        input_throw = input_throw + player_no;
+        input_left = input_left + player_no;
+        input_right = input_right + player_no;
+        input_drop = input_drop + player_no;
     }
 
 
@@ -50,14 +76,14 @@ public class place_block : MonoBehaviour
             pos.y = menu_blocks[selection].transform.position.y + 2;
             arrow.transform.position = pos;
 
-            if (Input.GetAxis("Horizontal") > 0 && !input_delay)// && Input.GetButtonDown("Horizontal"))
+            if (Input.GetAxis(input_horizontal) > 0 && !input_delay)// && Input.GetButtonDown("Horizontal"))
             {
                 delay_time = 0.2f;
                 input_delay = true;
                 selection++;
                 selection %= block_count;
             }
-            else if (Input.GetAxis("Horizontal") < 0&& !input_delay)// && Input.GetButtonDown("Horizontal"))
+            else if (Input.GetAxis(input_horizontal) < 0&& !input_delay)// && Input.GetButtonDown("Horizontal"))
             {
                 delay_time = 0.2f;
                 input_delay = true;
@@ -70,7 +96,7 @@ public class place_block : MonoBehaviour
                 }
                 selection %= block_count;
             }
-            else if (Input.GetButtonDown("Select"))
+            else if (Input.GetButtonDown(input_select))
             {
                 current_block = Instantiate(block_list[selection]);
                 current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -88,14 +114,14 @@ public class place_block : MonoBehaviour
                 spawn_pos = block_pos;
                 current_state = state.CARRYING;
             }
-            else if (Input.GetButtonDown("Cancel"))
+            else if (Input.GetButtonDown(input_cancel))
             {
                 closeMenu();
                 current_state = state.MOVING;
             }
 
         }
-        else if (Input.GetButtonDown("Open") && current_state == state.MOVING && isGrouded())
+        else if (Input.GetButtonDown(input_open) && current_state == state.MOVING && isGrouded())
         {
             openMenu();
         }
@@ -122,21 +148,29 @@ public class place_block : MonoBehaviour
                 }
                 */
 
-                if (Input.GetButtonDown("Throw"))
+                if (Input.GetButtonDown(input_throw))
                 {
                     throwBlock();
                     current_state = state.MOVING;
                 }
-                else if (Input.GetButtonUp("Drop"))
+                else if (Input.GetButtonUp(input_drop))
                 {
-                    dropBlock();
+                    if (isGrouded())
+                    {
+                        dropBlock();
+                    }
+                    else
+                    {
+                        throwBlock();
+                    }
+
                     current_state = state.MOVING;
                 }
-                else if (Input.GetButtonDown("RotRight"))
+                else if (Input.GetButtonDown(input_right))
                 {
                     rotateBlock(-1);
                 }
-                else if (Input.GetButtonDown("RotLeft"))
+                else if (Input.GetButtonDown(input_left))
                 {
                     rotateBlock(1);
                 }
