@@ -26,7 +26,7 @@ public class CharacterController2D : MonoBehaviour
 
     public Animator anim;
 
-    public int player = 1;
+    public int player_no = 1;
 
     string horizontal = "Horizontal";
     string vertical = "Vertical";
@@ -37,13 +37,6 @@ public class CharacterController2D : MonoBehaviour
     {
         boxCol = GetComponent<BoxCollider2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-        horizontal = horizontal + player;
-        vertical = vertical + player;
-        jump = jump + player;
     }
 
     // Update is called once per frame
@@ -135,4 +128,12 @@ public class CharacterController2D : MonoBehaviour
 
     }
 
+    public void setup(int no)
+    {
+        player_no = no;
+
+        horizontal = horizontal + player_no;
+        vertical = vertical + player_no;
+        jump = jump + player_no;
+    }
 }

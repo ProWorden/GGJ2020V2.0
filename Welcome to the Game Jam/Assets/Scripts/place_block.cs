@@ -50,18 +50,6 @@ public class place_block : MonoBehaviour
     {
         block_count = block_list.Length;
         menu_blocks = new GameObject[block_count];
-
-        input_horizontal = input_horizontal + player_no;
-        input_vertical = input_vertical + player_no;
-        input_jump = input_jump + player_no;
-        input_submit = input_submit + player_no;
-        input_open = input_open + player_no;
-        input_select = input_select + player_no;
-        input_cancel = input_cancel + player_no;
-        input_throw = input_throw + player_no;
-        input_left = input_left + player_no;
-        input_right = input_right + player_no;
-        input_drop = input_drop + player_no;
     }
 
 
@@ -352,5 +340,22 @@ public class place_block : MonoBehaviour
             delay_time = 0;
             input_delay = false;
         }
+    }
+
+    public void setup(int no)
+    {
+        player_no = no;
+
+        input_horizontal = input_horizontal + player_no;
+        input_vertical = input_vertical + player_no;
+        input_jump = input_jump + player_no;
+        input_submit = input_submit + player_no;
+        input_open = input_open + player_no;
+        input_select = input_select + player_no;
+        input_cancel = input_cancel + player_no;
+        input_throw = input_throw + player_no;
+        input_left = input_left + player_no;
+        input_right = input_right + player_no;
+        input_drop = input_drop + player_no;
     }
 }
