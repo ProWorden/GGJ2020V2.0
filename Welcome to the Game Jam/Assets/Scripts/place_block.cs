@@ -8,18 +8,22 @@ public class place_block : MonoBehaviour
 
     public GameObject[] block_list;
     public GameObject arrow_obj;
+    public GameObject hit_check;
 
     int block_count = 0;
     int selection = 0;
     GameObject current_block;
     GameObject[] menu_blocks;
     GameObject arrow;
+    bool canPlaceBlock = true;
+
+    Vector2 spawn_pos;
 
     enum state
     {
         MOVING = 0,
         MENU = 1,
-        CARRYING = 2
+        CARRYING = 2,
     }
 
     state current_state = state.MOVING;
@@ -66,7 +70,11 @@ public class place_block : MonoBehaviour
                 current_block.transform.position = block_pos;
                 current_block.transform.parent = this.transform;
 
+                current_block.AddComponent<hit_detection>();
+                current_block.GetComponent<hit_detection>().setTargetTag("Block");
+
                 closeMenu();
+                spawn_pos = block_pos;
                 current_state = state.CARRYING;
             }
             else if (Input.GetButtonDown("Cancel"))
@@ -76,19 +84,52 @@ public class place_block : MonoBehaviour
             }
 
         }
-        else if (Input.GetButtonDown("Open") && current_state == state.MOVING)
+        else if (Input.GetButtonDown("Open") && current_state == state.MOVING && isGrouded())
         {
             openMenu();
         }
-        else if (Input.GetButtonDown("Throw") && current_state == state.CARRYING)
+        
+
+        else if (current_state == state.CARRYING)
         {
-            throwBlock();
-            current_state = state.MOVING;
-        }
-        else if (Input.GetButtonDown("Drop") && current_state == state.CARRYING)
-        {
-            dropBlock();
-            current_state = state.MOVING;
+          //if (this.gameObject.GetComponentInChildren<SpriteRenderer>().flipX)
+          //{
+          //    pos.x += 1.2f;
+          //}
+          //else
+          //{
+          //    pos.x -= 1.2f;
+          //}
+
+            
+            if (testCollision())
+            {
+                /*
+                if (Input.GetButton("Drop"))
+                {
+                    rotateBlock();
+                }
+                */
+
+                if (Input.GetButtonDown("Throw"))
+                {
+                    throwBlock();
+                    current_state = state.MOVING;
+                }
+                else if (Input.GetButtonUp("Drop"))
+                {
+                    dropBlock();
+                    current_state = state.MOVING;
+                }
+                else if (Input.GetButtonDown("RotRight"))
+                {
+                    rotateBlock(-1);
+                }
+                else if (Input.GetButtonDown("RotLeft"))
+                {
+                    rotateBlock(1);
+                }
+            }       
         }
     }
 
@@ -142,29 +183,116 @@ public class place_block : MonoBehaviour
             force.x = -1;
         }
 
-        current_block.GetComponent<Rigidbody2D>().AddForce(force*200);
+        current_block.GetComponent<Rigidbody2D>().AddForce(force*250);
     }
 
+
+    void dropBlock()
+    {
+        current_block.transform.parent = null;
+        current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        current_block.transform.position = spawn_pos;
+        current_block.GetComponent<PolygonCollider2D>().enabled = true;
+        
+    }
+
+
+    /*
     void dropBlock()
     {
         current_block.transform.parent = null;
 
         current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        current_block.GetComponent<PolygonCollider2D>().enabled = true;
 
-        Vector2 pos = current_block.transform.position;
+        Vector2 force = Vector2.zero;
 
         if (this.gameObject.GetComponentInChildren<SpriteRenderer>().flipX)
         {
-            pos.x += 1.5f;
+            force.x = 1;
         }
         else
         {
-            pos.x -= 1.5f;
+            force.x = -1;
         }
 
-        current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        current_block.GetComponent<PolygonCollider2D>().enabled = true;
-        current_block.transform.position = pos;
+        current_block.GetComponent<PolygonCollider2D>().isTrigger = false;
+        current_block.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        current_block.GetComponent<Rigidbody2D>().AddForce(force * 200);
+    }
+    */
+
+
+    bool isGrouded()
+    {
+        if(this.GetComponent<CharacterController2D>().velocity.y > -0.2
+            && this.GetComponent<CharacterController2D>().velocity.y < 0.2)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool testCollision()
+    {
+        
+        spawn_pos.x = this.transform.position.x - 1.2f;
+
+        if (this.gameObject.GetComponentInChildren<SpriteRenderer>().flipX)
+        {
+            spawn_pos.x = this.transform.position.x + 1.2f;
+        }
+
+        Collider2D collision = Physics2D.OverlapBox(spawn_pos, new Vector2(1, 1), 0);
+
+        Vector2 pos = current_block.transform.position;
+        if (collision)
+        {
+            spawn_pos.y += 0.5f;
+            Debug.Log(spawn_pos);
+            Debug.Log("COL");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+        
+        
+
+      //for (int i=0; i<collisions.Length; i++)
+      //{
+      //    Debug.Log("Yo Collisions dough");
+      //    pos.y += 3;
+      //    current_block.transform.position = pos;
+      //}
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Block" &&
+            collision.gameObject.GetInstanceID() != current_block.GetInstanceID())
+        {
+            canPlaceBlock = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Block" && 
+            collision.gameObject.GetInstanceID() != current_block.GetInstanceID())
+        {
+            canPlaceBlock = true;
+        }
+    }
+
+    void rotateBlock()
+    {
+        current_block.transform.Rotate(new Vector3(0, 0, Time.deltaTime * 300));
+    }
+
+    void rotateBlock(int dir)
+    {
+        current_block.transform.Rotate(new Vector3(0, 0, dir * 90));
     }
 }

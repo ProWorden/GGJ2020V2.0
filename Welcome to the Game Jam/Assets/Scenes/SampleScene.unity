@@ -539,6 +539,7 @@ MonoBehaviour:
   - {fileID: 4086333905779901688, guid: aca9c35d8dac9c642827ef39f6bc503b, type: 3}
   arrow_obj: {fileID: 717964189652474518, guid: e70ac8045f185604781619af502fa392,
     type: 3}
+  hit_check: {fileID: 0}
 --- !u!1 &2139949724
 GameObject:
   m_ObjectHideFlags: 0
