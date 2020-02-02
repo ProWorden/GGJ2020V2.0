@@ -2,9 +2,8 @@
 using UnityEngine;
 using System;
 
-public class AudioManager : MonoBehaviour
+public class MenuAudioManager : MonoBehaviour
 {
-
     public Sound[] sounds;
 
     public static AudioManager instance;
@@ -22,9 +21,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-   public void Play (string name)
+    public void Play(string name)
     {
-        Sound s =Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
 
         if (s == null)
@@ -36,7 +35,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-       
-        Play("In Game Music");
+
+        Play("Menu Music");
     }
 }
