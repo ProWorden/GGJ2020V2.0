@@ -301,12 +301,6 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 1
-  - name: Menu Switch
-    clip: {fileID: 8300000, guid: 01600d2d8cba9fa46be768ad736c8817, type: 3}
-    volume: 0.2
-    pitch: 1
-    source: {fileID: 0}
-    loop: 0
   - name: Block Select2
     clip: {fileID: 8300000, guid: 901db3d406630cd4caf9ea0234a1174e, type: 3}
     volume: 0.4
@@ -315,6 +309,12 @@ MonoBehaviour:
     loop: 0
   - name: Block Fall
     clip: {fileID: 8300000, guid: 9e55fd7673f0a254b815ec455f967b79, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Death
+    clip: {fileID: 8300000, guid: 4154f203e06aeb34e960a29ff3154d64, type: 3}
     volume: 0.2
     pitch: 1
     source: {fileID: 0}
