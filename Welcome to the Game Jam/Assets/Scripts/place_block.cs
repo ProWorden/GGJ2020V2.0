@@ -14,6 +14,7 @@ public class place_block : MonoBehaviour
     GameObject current_block;
     GameObject[] menu_blocks;
     GameObject arrow;
+    public float forceMultiplyer;
 
     enum state
     {
@@ -142,7 +143,7 @@ public class place_block : MonoBehaviour
             force.x = -1;
         }
 
-        current_block.GetComponent<Rigidbody2D>().AddForce(force*200);
+        current_block.GetComponent<Rigidbody2D>().AddForce(force*forceMultiplyer);
     }
 
     void dropBlock()
