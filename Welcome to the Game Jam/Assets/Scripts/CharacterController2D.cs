@@ -56,7 +56,9 @@ public class CharacterController2D : MonoBehaviour
 
         velocity.y += Physics2D.gravity.y * Time.deltaTime;
 
-        if (moveInput != 0)
+      
+      
+         if (moveInput != 0)
         {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         }
@@ -79,13 +81,28 @@ public class CharacterController2D : MonoBehaviour
             ColliderDistance2D colliderDistance = hit.Distance(boxCol);
             if(colliderDistance.isOverlapped)
             {
-                collided = true;
-                transform.Translate(colliderDistance.pointA - colliderDistance.pointB);
                 
+                transform.Translate(colliderDistance.pointA - colliderDistance.pointB);
+               
+
                 if (Vector2.Angle(colliderDistance.normal, Vector2.up) < 90 && velocity.y < 0)
                 {
                     grounded = true;
                 }
+
+
+
+                if(!grounded && !Input.GetButtonDown("Jump") && velocity.y > 0)
+                {
+                    velocity.y = -velocity.y * 0.01f;
+                }
+                else if (!grounded && !Input.GetButtonDown("Jump"))
+                {
+                    velocity.x = -velocity.x * 0.8f;
+                }
+              
+
+
             }
         }
     }
