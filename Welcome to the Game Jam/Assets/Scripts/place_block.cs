@@ -45,6 +45,7 @@ public class place_block : MonoBehaviour
             {
                 selection++;
                 selection %= block_count;
+                FindObjectOfType<AudioManager>().Play("Block Select");
             }
             else if (Input.GetAxis("Horizontal") < 0 && Input.GetButtonDown("Horizontal"))
             {
@@ -55,6 +56,7 @@ public class place_block : MonoBehaviour
                     selection += 4;
                 }
                 selection %= block_count;
+                FindObjectOfType<AudioManager>().Play("Block Select");
             }
             else if (Input.GetButtonDown("Select"))
             {
@@ -66,6 +68,8 @@ public class place_block : MonoBehaviour
 
                 current_block.transform.position = block_pos;
                 current_block.transform.parent = this.transform;
+                FindObjectOfType<AudioManager>().Play("Block Select2");
+
 
                 closeMenu();
                 current_state = state.CARRYING;
@@ -144,6 +148,7 @@ public class place_block : MonoBehaviour
         }
 
         current_block.GetComponent<Rigidbody2D>().AddForce(force*forceMultiplyer);
+
     }
 
     void dropBlock()
@@ -167,5 +172,6 @@ public class place_block : MonoBehaviour
         current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         current_block.GetComponent<PolygonCollider2D>().enabled = true;
         current_block.transform.position = pos;
+        FindObjectOfType<AudioManager>().Play("Block Fall");
     }
 }
