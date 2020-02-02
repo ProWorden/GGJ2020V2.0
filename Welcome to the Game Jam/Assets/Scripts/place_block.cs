@@ -10,12 +10,19 @@ public class place_block : MonoBehaviour
     public GameObject arrow_obj;
 
     int block_count = 0;
-
-    bool in_menu = false;
     int selection = 0;
     GameObject current_block;
     GameObject[] menu_blocks;
     GameObject arrow;
+
+    enum state
+    {
+        MOVING = 0,
+        MENU = 1,
+        CARRYING = 2
+    }
+
+    state current_state = state.MOVING;
 
     private void Start()
     {
@@ -26,29 +33,7 @@ public class place_block : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Open") && !in_menu)
-        {
-            in_menu = true;
-            Vector2 player_pos = this.transform.position;
-
-            for (int i=0; i< block_count; i++)
-            {
-                Vector2 block_pos;
-                block_pos.y = player_pos.y + 2;
-                block_pos.x = player_pos.x - 5 + (i * 2);
-
-                menu_blocks[i] = Instantiate(block_list[i]);
-                menu_blocks[i].transform.position = block_pos;
-                menu_blocks[i].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                menu_blocks[i].GetComponent<PolygonCollider2D>().enabled = false;
-
-                this.GetComponent<CharacterController2D>().enabled = false;
-            }
-
-            arrow = Instantiate(arrow_obj);
-        }
-
-        if (in_menu)
+        if (current_state == state.MENU)
         {
             Vector2 pos = arrow.transform.position;
             pos.x = menu_blocks[selection].transform.position.x;
@@ -62,7 +47,7 @@ public class place_block : MonoBehaviour
             }
             else if (Input.GetAxis("Horizontal") < 0 && Input.GetButtonDown("Horizontal"))
             {
-                selection--;                
+                selection--;
                 if (selection < 0)
                 {
                     selection *= -1;
@@ -73,22 +58,113 @@ public class place_block : MonoBehaviour
             else if (Input.GetButtonDown("Select"))
             {
                 current_block = Instantiate(block_list[selection]);
+                current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                current_block.GetComponent<PolygonCollider2D>().enabled = false;
+                Vector2 block_pos = this.transform.position;
+                block_pos.y += 1;
+
+                current_block.transform.position = block_pos;
+                current_block.transform.parent = this.transform;
+
+                closeMenu();
+                current_state = state.CARRYING;
             }
-
-            if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Select"))
+            else if (Input.GetButtonDown("Cancel"))
             {
-                for (int i = 0; i < block_count; i++)
-                {
-                    GameObject.Destroy(menu_blocks[i]);
-
-                }
-
-                GameObject.Destroy(arrow);
-
-                in_menu = false;
-                this.GetComponent<CharacterController2D>().enabled = true;
+                closeMenu();
+                current_state = state.MOVING;
             }
 
         }
+        else if (Input.GetButtonDown("Open") && current_state == state.MOVING)
+        {
+            openMenu();
+        }
+        else if (Input.GetButtonDown("Throw") && current_state == state.CARRYING)
+        {
+            throwBlock();
+            current_state = state.MOVING;
+        }
+        else if (Input.GetButtonDown("Drop") && current_state == state.CARRYING)
+        {
+            dropBlock();
+            current_state = state.MOVING;
+        }
+    }
+
+    void closeMenu()
+    {
+        for (int i = 0; i < block_count; i++)
+        {
+            GameObject.Destroy(menu_blocks[i]);
+
+        }
+
+        GameObject.Destroy(arrow);
+
+        this.GetComponent<CharacterController2D>().enabled = true;
+    }
+
+    void openMenu()
+    {
+        current_state = state.MENU;
+        Vector2 player_pos = this.transform.position;
+
+        for (int i = 0; i < block_count; i++)
+        {
+            Vector2 block_pos;
+            block_pos.y = player_pos.y + 2;
+            block_pos.x = player_pos.x - 5 + (i * 2);
+
+            menu_blocks[i] = Instantiate(block_list[i]);
+            menu_blocks[i].transform.position = block_pos;
+            menu_blocks[i].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            menu_blocks[i].GetComponent<PolygonCollider2D>().enabled = false;
+
+            this.GetComponent<CharacterController2D>().enabled = false;
+        }
+
+        arrow = Instantiate(arrow_obj);
+    }
+
+    void throwBlock()
+    {
+        current_block.transform.parent = null;
+
+        current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        current_block.GetComponent<PolygonCollider2D>().enabled = true;
+        Vector2 force;
+        force.x = 1;
+        force.y = 0.5f;
+
+        if (!this.gameObject.GetComponentInChildren<SpriteRenderer>().flipX)
+        {
+            force.x = -1;
+        }
+
+        current_block.GetComponent<Rigidbody2D>().AddForce(force*200);
+    }
+
+    void dropBlock()
+    {
+        current_block.transform.parent = null;
+
+        current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        current_block.GetComponent<PolygonCollider2D>().enabled = true;
+
+        Vector2 pos = current_block.transform.position;
+
+        if (this.gameObject.GetComponentInChildren<SpriteRenderer>().flipX)
+        {
+            pos.x += 1.5f;
+        }
+        else
+        {
+            pos.x -= 1.5f;
+        }
+
+        current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        current_block.GetComponent<PolygonCollider2D>().enabled = true;
+        current_block.transform.position = pos;
     }
 }
