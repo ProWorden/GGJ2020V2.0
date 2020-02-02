@@ -56,6 +56,7 @@ public class place_block : MonoBehaviour
                 input_delay = true;
                 selection++;
                 selection %= block_count;
+                FindObjectOfType<AudioManager>().Play("Block Select");
             }
             else if (Input.GetAxis("Horizontal") < 0&& !input_delay)// && Input.GetButtonDown("Horizontal"))
             {
@@ -69,6 +70,7 @@ public class place_block : MonoBehaviour
                     selection += 4;
                 }
                 selection %= block_count;
+                FindObjectOfType<AudioManager>().Play("Block Select");
             }
             else if (Input.GetButtonDown("Select"))
             {
@@ -80,9 +82,8 @@ public class place_block : MonoBehaviour
 
                 current_block.transform.position = block_pos;
                 current_block.transform.parent = this.transform;
+                FindObjectOfType<AudioManager>().Play("Block Select2");
 
-                current_block.AddComponent<hit_detection>();
-                current_block.GetComponent<hit_detection>().setTargetTag("Block");
 
                 closeMenu();
                 spawn_pos = block_pos;
@@ -103,44 +104,16 @@ public class place_block : MonoBehaviour
 
         else if (current_state == state.CARRYING)
         {
-          //if (this.gameObject.GetComponentInChildren<SpriteRenderer>().flipX)
-          //{
-          //    pos.x += 1.2f;
-          //}
-          //else
-          //{
-          //    pos.x -= 1.2f;
-          //}
-
-            
-            if (testCollision())
-            {
-                /*
-                if (Input.GetButton("Drop"))
-                {
-                    rotateBlock();
-                }
-                */
-
-                if (Input.GetButtonDown("Throw"))
-                {
-                    throwBlock();
-                    current_state = state.MOVING;
-                }
-                else if (Input.GetButtonUp("Drop"))
-                {
-                    dropBlock();
-                    current_state = state.MOVING;
-                }
-                else if (Input.GetButtonDown("RotRight"))
-                {
-                    rotateBlock(-1);
-                }
-                else if (Input.GetButtonDown("RotLeft"))
-                {
-                    rotateBlock(1);
-                }
-            }       
+            throwBlock();
+           
+            current_state = state.MOVING;
+            FindObjectOfType<AudioManager>().Play("Block Fall");
+        }
+        else if (Input.GetButtonDown("Drop") && current_state == state.CARRYING)
+        {
+            dropBlock();
+            current_state = state.MOVING;
+            FindObjectOfType<AudioManager>().Play("Block Fall");
         }
     }
 
@@ -195,6 +168,7 @@ public class place_block : MonoBehaviour
         }
 
         current_block.GetComponent<Rigidbody2D>().AddForce(force*forceMultiplyer);
+
     }
 
 
@@ -226,9 +200,10 @@ public class place_block : MonoBehaviour
             force.x = -1;
         }
 
-        current_block.GetComponent<PolygonCollider2D>().isTrigger = false;
-        current_block.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        current_block.GetComponent<Rigidbody2D>().AddForce(force * 200);
+        current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        current_block.GetComponent<PolygonCollider2D>().enabled = true;
+        current_block.transform.position = pos;
+        
     }
     */
 

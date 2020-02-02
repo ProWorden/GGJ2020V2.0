@@ -26,6 +26,7 @@ public class CharacterController2D : MonoBehaviour
 
     public Animator anim;
 
+ 
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,14 +43,16 @@ public class CharacterController2D : MonoBehaviour
         float acceleration = grounded ? walkAcceleration : airAcceleration;
         float deceleration = grounded ? groundDeceleration : 0;
         transform.Translate(velocity * Time.deltaTime);
+       
 
-        if(grounded)
+        if (grounded)
         {
             velocity.y = 0;
 
             if (Input.GetButtonDown("Jump"))
             {
                 velocity.y = Mathf.Sqrt(2 * jumpHeight * Mathf.Abs(Physics2D.gravity.y));
+                FindObjectOfType<AudioManager>().Play("Jump");
                
             }
         }
@@ -61,13 +64,16 @@ public class CharacterController2D : MonoBehaviour
          if (moveInput != 0)
         {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
+
         }
         else
         {
             velocity.x = Mathf.MoveTowards(velocity.x, 0.0f, deceleration * Time.deltaTime);
+           
         }
 
         anim.SetBool("Walking", moveInput != 0);
+   
         anim.SetBool("Grounded", grounded);
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, boxCol.size, 0);
@@ -121,5 +127,7 @@ public class CharacterController2D : MonoBehaviour
         }
 
     }
+
+
 
 }
