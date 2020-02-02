@@ -26,8 +26,7 @@ public class CharacterController2D : MonoBehaviour
 
     public Animator anim;
 
-    bool delay = false;
-    float delay_time;
+ 
     // Start is called before the first frame update
     void Awake()
     {
@@ -66,22 +65,13 @@ public class CharacterController2D : MonoBehaviour
         {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
 
-            if (!delay)
-            {
-               
-                delay = true;
-                delay_time = 1f;
-                FindObjectOfType<AudioManager>().Play("Walk");
-            }
-            
-
         }
         else
         {
             velocity.x = Mathf.MoveTowards(velocity.x, 0.0f, deceleration * Time.deltaTime);
            
         }
-        
+
         anim.SetBool("Walking", moveInput != 0);
    
         anim.SetBool("Grounded", grounded);
@@ -138,18 +128,6 @@ public class CharacterController2D : MonoBehaviour
 
     }
 
-    void delay_audio()
-    {
-        if (delay && delay_time > 0)
-        {
-            delay_time -= Time.deltaTime;
-        }
 
-        if (delay_time < 0)
-        {
-            delay = false;
-            delay_time = 0;
-        }
-    }
 
 }

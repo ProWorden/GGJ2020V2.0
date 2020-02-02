@@ -88,12 +88,15 @@ public class place_block : MonoBehaviour
         else if (Input.GetButtonDown("Throw") && current_state == state.CARRYING)
         {
             throwBlock();
+           
             current_state = state.MOVING;
+            FindObjectOfType<AudioManager>().Play("Block Fall");
         }
         else if (Input.GetButtonDown("Drop") && current_state == state.CARRYING)
         {
             dropBlock();
             current_state = state.MOVING;
+            FindObjectOfType<AudioManager>().Play("Block Fall");
         }
     }
 
@@ -172,6 +175,6 @@ public class place_block : MonoBehaviour
         current_block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         current_block.GetComponent<PolygonCollider2D>().enabled = true;
         current_block.transform.position = pos;
-        FindObjectOfType<AudioManager>().Play("Block Fall");
+        
     }
 }
