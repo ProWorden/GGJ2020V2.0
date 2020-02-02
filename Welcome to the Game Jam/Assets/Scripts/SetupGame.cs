@@ -14,6 +14,8 @@ public class SetupGame : MonoBehaviour
         player_count %= 5;
         player_count++;
 
+        main_camera.GetComponent<VerticalScrolling>().setupList(player_count);
+
         float player_pos = -21;
         Debug.Log(player_count);
 
@@ -25,7 +27,7 @@ public class SetupGame : MonoBehaviour
             new_player.transform.position = new Vector3(player_pos, -7, 0);
             player_pos += 14;
 
-            //main_camera.GetComponent<VerticalScrolling>().target = new_player.transform;
+            main_camera.GetComponent<VerticalScrolling>().addPlayerToList(new_player, i);
 
             Debug.Log("Creating Player [" + i + "]");
         }
