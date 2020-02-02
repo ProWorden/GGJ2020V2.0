@@ -158,7 +158,7 @@ MonoBehaviour:
   sr: {fileID: 0}
   collided: 1
   anim: {fileID: 2563711628382250023}
-  player: 1
+  player_no: 1
 --- !u!61 &2563711628878162917
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
     type: 3}
   hit_check: {fileID: 0}
   player_no: 1
-  forceMultiplyer: 500
+  forceMultiplyer: 300
 --- !u!1 &2563711629871001267
 GameObject:
   m_ObjectHideFlags: 0

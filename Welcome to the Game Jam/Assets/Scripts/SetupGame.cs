@@ -20,7 +20,7 @@ public class SetupGame : MonoBehaviour
     private void Awake()
     {
         player_count %= 5;
-        player_count++;
+        //++;
 
         main_camera.GetComponent<VerticalScrolling>().setupList(player_count);
         setupBoundries();
@@ -28,18 +28,20 @@ public class SetupGame : MonoBehaviour
         float player_pos = -21;
         Debug.Log(player_count);
 
-        for (int i=1; i<player_count; i++)
+        for (int i=1; i<player_count+1; i++)
         {
             GameObject new_player = Instantiate(player);
             new_player.GetComponent<CharacterController2D>().setup(i);
             new_player.GetComponent<place_block>().setup(i);
-
-            //player_pos = rightConstraint;
+         
+            player_pos = -21 + (i-1) *(screen_size / (player_count));
+            Debug.Log(i);
+            Debug.Log(player_pos);
 
             new_player.transform.position = new Vector3(player_pos, -7, 0);
-            player_pos += 14;
+            //player_pos += 14;
 
-            main_camera.GetComponent<VerticalScrolling>().addPlayerToList(new_player, i);
+            main_camera.GetComponent<VerticalScrolling>().addPlayerToList(new_player, i-1);
 
             Debug.Log("Creating Player [" + i + "]");
         }
@@ -61,10 +63,15 @@ public class SetupGame : MonoBehaviour
 
     void setup_barriers()
     {
-        for (int i=0; i<player_count+2; i++)
+        for (int i=0; i<player_count+1; i++)
         {
 
-            float pos = leftConstraint + i * (screen_size / (player_count + 1));
+            float pos = leftConstraint + i * (screen_size / (player_count));
+
+            Debug.Log(leftConstraint);
+            Debug.Log(rightConstraint);
+            Debug.Log(screen_size);
+            Debug.Log("===================");
 
             GameObject new_barrier = Instantiate(barrier);
             new_barrier.transform.position = new Vector3(pos, 7, 1);
