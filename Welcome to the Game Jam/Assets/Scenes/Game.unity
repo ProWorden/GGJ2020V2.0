@@ -215,7 +215,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &567886964
 GameObject:
@@ -246,6 +246,92 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2096415008}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &695179939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695179941}
+  - component: {fileID: 695179940}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &695179940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695179939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa0eb82147a70f4e9cc36d4109363a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Jump
+    clip: {fileID: 8300000, guid: f54e241c3957b794282be1222187bb24, type: 3}
+    volume: 0.35
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Block Select
+    clip: {fileID: 8300000, guid: 24cc683852bb8fe419e90b4269ce5b79, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: In Game Music
+    clip: {fileID: 8300000, guid: 5f3ab572414b09142855dfd62fa40724, type: 3}
+    volume: 0.3
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: Menu Music
+    clip: {fileID: 8300000, guid: 85281fe92a81ca9459dff49a65149141, type: 3}
+    volume: 0.3
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: Menu Switch
+    clip: {fileID: 8300000, guid: 01600d2d8cba9fa46be768ad736c8817, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Block Select2
+    clip: {fileID: 8300000, guid: 901db3d406630cd4caf9ea0234a1174e, type: 3}
+    volume: 0.4
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Block Fall
+    clip: {fileID: 8300000, guid: 9e55fd7673f0a254b815ec455f967b79, type: 3}
+    volume: 0.2
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+--- !u!4 &695179941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695179939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.3688583, y: 12.774572, z: -26.578125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &853759386
 GameObject:
@@ -326,7 +412,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &853759389
 MonoBehaviour:
@@ -475,7 +561,7 @@ Transform:
   - {fileID: 1499844319}
   - {fileID: 567886965}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2096415009
 MonoBehaviour:
@@ -674,5 +760,5 @@ Transform:
   m_LocalScale: {x: 60.048897, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
