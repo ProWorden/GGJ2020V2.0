@@ -300,8 +300,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1863074759
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c3f5b38c25da2804fb94cf7f9cb9524a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -427,8 +427,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 773071125
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 09a48eebd92cb0c42a3785d043d233ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -454,7 +454,6 @@ GameObject:
   - component: {fileID: 2096415010}
   - component: {fileID: 2096415011}
   - component: {fileID: 2096415012}
-  - component: {fileID: 2096415013}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -569,6 +568,7 @@ MonoBehaviour:
   arrow_obj: {fileID: 717964189652474518, guid: e70ac8045f185604781619af502fa392,
     type: 3}
   hit_check: {fileID: 0}
+  forceMultiplyer: 500
 --- !u!1 &2139949724
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,8 +648,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 84207603
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8b5a7b6a6fbc8d8468388694bf2b926b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

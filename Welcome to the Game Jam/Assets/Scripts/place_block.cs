@@ -18,6 +18,9 @@ public class place_block : MonoBehaviour
     bool canPlaceBlock = true;
     public float forceMultiplyer;
 
+    bool input_delay = false;
+    float delay_time;
+
     Vector2 spawn_pos;
 
     enum state
@@ -38,6 +41,8 @@ public class place_block : MonoBehaviour
 
     void Update()
     {
+        delay_input();
+
         if (current_state == state.MENU)
         {
             Vector2 pos = arrow.transform.position;
@@ -45,13 +50,18 @@ public class place_block : MonoBehaviour
             pos.y = menu_blocks[selection].transform.position.y + 2;
             arrow.transform.position = pos;
 
-            if (Input.GetAxis("Horizontal") > 0 && Input.GetButtonDown("Horizontal"))
+            if (Input.GetAxis("Horizontal") > 0 && !input_delay)// && Input.GetButtonDown("Horizontal"))
             {
+                delay_time = 0.2f;
+                input_delay = true;
                 selection++;
                 selection %= block_count;
             }
-            else if (Input.GetAxis("Horizontal") < 0 && Input.GetButtonDown("Horizontal"))
+            else if (Input.GetAxis("Horizontal") < 0&& !input_delay)// && Input.GetButtonDown("Horizontal"))
             {
+                delay_time = 0.2f;
+                input_delay = true;
+
                 selection--;
                 if (selection < 0)
                 {
@@ -295,5 +305,18 @@ public class place_block : MonoBehaviour
     void rotateBlock(int dir)
     {
         current_block.transform.Rotate(new Vector3(0, 0, dir * 90));
+    }
+
+    void delay_input()
+    {
+        if (input_delay && delay_time > 0)
+        {
+            delay_time -= Time.deltaTime;
+        }
+        if (delay_time < 0)
+        {
+            delay_time = 0;
+            input_delay = false;
+        }
     }
 }
