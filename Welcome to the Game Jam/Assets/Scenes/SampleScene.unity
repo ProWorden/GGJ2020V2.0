@@ -568,24 +568,7 @@ MonoBehaviour:
   - {fileID: 4086333905779901688, guid: aca9c35d8dac9c642827ef39f6bc503b, type: 3}
   arrow_obj: {fileID: 717964189652474518, guid: e70ac8045f185604781619af502fa392,
     type: 3}
-  forceMultiplyer: 500
---- !u!114 &2096415013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096415007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82690edbe73179e4a987c5f860440402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftConstraint: 0
-  rightConstraint: 0
-  buffer: 1
-  distanceZ: 0
-  cam: {fileID: 519420031}
+  hit_check: {fileID: 0}
 --- !u!1 &2139949724
 GameObject:
   m_ObjectHideFlags: 0
