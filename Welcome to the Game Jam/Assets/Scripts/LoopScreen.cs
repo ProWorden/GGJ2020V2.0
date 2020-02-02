@@ -20,8 +20,8 @@ public class LoopScreen : MonoBehaviour
 
         
 
-        leftConstraint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.0f, 0.0f, distanceZ)).x;
-        rightConstraint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 1.0f, 0.0f, distanceZ)).x;
+        leftConstraint = cam.ScreenToWorldPoint(new Vector3(Screen.width * 0.0f, 0.0f, distanceZ)).x;
+        rightConstraint = cam.ScreenToWorldPoint(new Vector3(Screen.width * 1.0f, 0.0f, distanceZ)).x;
     }
 
     void FixedUpdate()
