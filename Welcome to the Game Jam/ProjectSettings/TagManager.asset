@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Block
+  - Controller
+  - Death
   layers:
   - Default
   - TransparentFX
@@ -15,8 +17,8 @@ TagManager:
   - 
   - 
   - Ground
-  - 
-  - 
+  - Barrier
+  - Player
   - 
   - 
   - 
@@ -53,4 +55,7 @@ TagManager:
     locked: 0
   - name: Menu
     uniqueID: 1596129993
+    locked: 0
+  - name: Foreground
+    uniqueID: 2135594067
     locked: 0

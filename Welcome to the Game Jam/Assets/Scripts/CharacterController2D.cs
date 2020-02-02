@@ -136,4 +136,9 @@ public class CharacterController2D : MonoBehaviour
         vertical = vertical + player_no;
         jump = jump + player_no;
     }
+
+    public int getPlayerNo()
+    {
+        return player_no;
+    }
 }

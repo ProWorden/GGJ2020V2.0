@@ -7,16 +7,20 @@ public class VerticalScrolling : MonoBehaviour
     Transform target;
     GameObject[] players;
     int player_count;
+    bool setup = false;
 
      void FixedUpdate()
     {
-        findTarget();
-
-        if (target)
+       if (setup)
         {
-            Vector3 targetPos = new Vector3(transform.position.x, target.position.y + 5, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, targetPos, 0.2f);
-        }   
+            findTarget();
+
+            if (target)
+            {
+                Vector3 targetPos = new Vector3(transform.position.x, target.position.y + 5, transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPos, 0.2f);
+            }
+        }
     }
 
     void findTarget()
@@ -45,6 +49,11 @@ public class VerticalScrolling : MonoBehaviour
     public void addPlayerToList(GameObject player, int player_no)
     {
         players[player_no] = player;
+
+        if (player_no == players.Length)
+        {
+            setup = true;
+        }
     }
 
 }
