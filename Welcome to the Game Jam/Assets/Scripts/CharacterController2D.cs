@@ -98,7 +98,7 @@ public class CharacterController2D : MonoBehaviour
                 }
                 else if (!grounded && !Input.GetButtonDown("Jump"))
                 {
-                    velocity.x = -velocity.x * 0.8f;
+                    velocity.x = -velocity.x * 0.5f;
                 }
               
 
